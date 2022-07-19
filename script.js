@@ -7,8 +7,9 @@ const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 
 let attempt = 3;
-let randomNum = () => {
-  return Math.floor(Math.random() * 20) + 1
+let randomNum = {
+   random : function() {return (Math.floor(Math.random() * 20) + 1)},
+  
 };
 
 const start = () => {
@@ -17,7 +18,7 @@ const start = () => {
   attempt = 3;
   feedback.innerText = "FEEDBACK";
   attemptEl.innerText = attempt;
-  console.log(randomNum());
+  console.log(randomNum.random);
 };
 
 const hide = () => {
@@ -35,14 +36,17 @@ function gameOver() {
 const restart = () => {
   submit.value = "submit";
   start();
+  hide();
 };
 
 start();
+
 
 submit.addEventListener("click", (e) => {
   e.preventDefault();
   if (submit.value === "submit") {
     let guess = Number(input.value);
+
     // if (guess === randomNum) {
     //   feedback.innerText = "You Win";
     //   submit.value = "Restart";
@@ -58,16 +62,16 @@ submit.addEventListener("click", (e) => {
 
     // use switch statement to handle feedback
     switch (true) {
-      case guess === randomNum():
+      case guess === randomNum.random:
         feedback.innerText = "You Win";
         submit.value = "Restart";
         randomNumEl.innerText = String(guess);
         break;
-      case guess < randomNum():
+      case guess < randomNum.random:
         feedback.innerText = "Too Low";
         attempt--;
         break;
-      case guess > randomNum():
+      case guess > randomNum.random:
         feedback.innerText = "Too High";
         attempt--;
         break;
@@ -75,6 +79,7 @@ submit.addEventListener("click", (e) => {
     };
 
     attemptEl.innerText = attempt; // update attempts
+    gameOver(); // check if game is over
   } else {
     restart();
   }
