@@ -7,9 +7,9 @@ const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 
 let attempt = 3;
-let randomNum = {
-   random : function() {return (Math.floor(Math.random() * 20) + 1)},
-  
+let randomNum = 0;
+let random = () => {
+    return Math.floor(Math.random() * 20) + 1;
 };
 
 const start = () => {
@@ -18,12 +18,14 @@ const start = () => {
   attempt = 3;
   feedback.innerText = "FEEDBACK";
   attemptEl.innerText = attempt;
-  console.log(randomNum.random);
+  randomNum = random();
+  console.log(randomNum);
 };
 
 const hide = () => {
   input.classList.toggle("hidden");
 };
+
 
 function gameOver() {
   if (attempt <= 0) {
@@ -60,18 +62,19 @@ submit.addEventListener("click", (e) => {
     //   attempt--;
     // }
 
-    // use switch statement to handle feedback
+    // using switch statement to handle feedback
     switch (true) {
-      case guess === randomNum.random:
+      case guess === randomNum:
         feedback.innerText = "You Win";
         submit.value = "Restart";
+        hide(); // hide input
         randomNumEl.innerText = String(guess);
         break;
-      case guess < randomNum.random:
+      case guess < randomNum:
         feedback.innerText = "Too Low";
         attempt--;
         break;
-      case guess > randomNum.random:
+      case guess > randomNum:
         feedback.innerText = "Too High";
         attempt--;
         break;
